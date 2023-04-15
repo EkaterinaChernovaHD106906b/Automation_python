@@ -6,6 +6,7 @@ from pages.base_page import BasePage
 
 
 class CheckBoxPage(BasePage):
+
     BUTTON_EXPAND_ALL = (By.CSS_SELECTOR, 'button[title="Expand all"]')
     ITEM_LIST = (By.CSS_SELECTOR, 'span[class="rct-title"]')
     CHECKED_ITEMS = (By.CSS_SELECTOR, 'svg[class="rct-icon rct-icon-check"]')
