@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
@@ -17,6 +19,15 @@ class WebTablePage(BasePage):
 
     # table
     LIST = (By.CSS_SELECTOR, 'div.rt-tr-group')
+    SEARCH_INPUT = (By.CSS_SELECTOR, 'input#searchBox')
+    DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
+    ROW_PARENT = (By.XPATH, './/ancestor::div[@class="rt-tr-group"]')
+
+    # update
+    UPDATE_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
+    INPUT_AGE = (By.CSS_SELECTOR, 'input#age')
+    NO_ROWS_FOUND = (By.CSS_SELECTOR, 'div.rt-noData')
+    COUNT_ROWS = (By.CSS_SELECTOR, 'select[aria-label="rows per page"]')
 
     def add_new_person(self):
         count = 1
@@ -46,3 +57,39 @@ class WebTablePage(BasePage):
             data.append(item.text.splitlines())
             # splitlines() delete \n
         return data
+
+    def search_some_person(self, key_word):
+        self.element_is_visible(self.SEARCH_INPUT).send_keys(key_word)
+
+    def check_search_person(self):
+        delete_button = self.element_is_present(self.DELETE_BUTTON)
+        row = delete_button.find_element('xpath', './/ancestor::div[@class="rt-tr-group"]')
+        return row.text.splitlines()
+
+    def update_person_info(self):
+        person_info = next(generated_person())
+        age = person_info.age
+        self.element_is_visible(self.UPDATE_BUTTON).click()
+        self.element_is_visible(self.INPUT_AGE).clear()
+        self.element_is_visible(self.INPUT_AGE).send_keys(age)
+        self.element_is_visible(self.SUBMIT_BUTTON).click()
+        return str(age)
+
+    def delete_some_person(self):
+        self.element_is_visible(self.DELETE_BUTTON).click()
+        return self.element_is_present(self.NO_ROWS_FOUND).text
+
+    def select_up_to_some_rows(self):
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for x in count:
+            count_row_button = self.element_is_visible(self.COUNT_ROWS)
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+            self.element_is_visible((By.CSS_SELECTOR, f'option[value="{x}"]')).click()
+            data.append(self.check_count_rows())
+        return data
+
+    def check_count_rows(self):
+        list_rows = self.elements_are_present(self.LIST)
+        return len(list_rows)

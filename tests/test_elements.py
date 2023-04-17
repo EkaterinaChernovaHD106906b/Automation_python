@@ -1,3 +1,4 @@
+import random
 import time
 
 from pages.base_page import BasePage
@@ -59,7 +60,36 @@ class TestElements:
             assert new_person in table_result
             time.sleep(5)
 
+        def test_web_table_search_person(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            key_world = web_table_page.add_new_person()[random.randint(0, 5)]
+            web_table_page.search_some_person(key_world)
+            table_result = web_table_page.check_search_person()
+            assert key_world in table_result, 'The person was not found in the table'
 
+        def test_web_table_update_person_info(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            last_name = web_table_page.add_new_person()[1]
+            web_table_page.search_some_person(last_name)
+            age = web_table_page.update_person_info()
+            row = web_table_page.check_search_person()
+            assert age in row, 'The person card has not been changed'
+            time.sleep(5)
 
+        def test_delete_person(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            last_name = web_table_page.add_new_person()[1]
+            web_table_page.search_some_person(last_name)
+            actual_rows = web_table_page.delete_some_person()
+            expected_rows = 'No rows found'
+            assert actual_rows == expected_rows
 
-
+        def test_web_table_change_count_row(self, driver):
+            web_table_page = WebTablePage(driver, 'https://demoqa.com/webtables')
+            web_table_page.open()
+            count = web_table_page.select_up_to_some_rows()
+            time.sleep(5)
+            assert count == [5, 10, 20, 25, 50, 100], 'Error'
