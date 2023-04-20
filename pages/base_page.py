@@ -1,3 +1,4 @@
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -33,4 +34,15 @@ class BasePage:
 
     def remove_footer(self):
         self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+
+    def action_double_click(self, element):
+        action = ActionChains(self.driver)
+        action.double_click(element)
+        action.perform()
+
+    def action_right_click(self, element):
+        action = ActionChains(self.driver)
+        action.context_click(element)
+        action.perform()
+
 
