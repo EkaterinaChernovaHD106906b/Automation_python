@@ -4,8 +4,10 @@ import time
 from pages.base_page import BasePage
 from pages.button_page import ButtonsPage
 from pages.check_box_page import CheckBoxPage
-from pages.elements_page_locators import TextBoxPage
+from pages.form_page import TextBoxPage
+from pages.link_page import LinkPage
 from pages.radio_button_page import RadioButtonPage
+from pages.upload_download_page import UploadDownloadPage
 from pages.web_table_page import WebTablePage
 
 
@@ -106,3 +108,21 @@ class TestElements:
             assert double == 'You have done a double click'
             assert right == 'You have done a right click'
             assert click == 'You have done a dynamic click'
+
+
+    class TestLinksPage:
+
+        def test_check_link(self, driver):
+            page_link = LinkPage(driver, 'https://demoqa.com/links')
+            page_link.open()
+            print(page_link.check_new_tab_simple_link())
+            response_code = page_link.check_broken_link('https://demoqa.com/bad-request')
+            assert response_code == 400
+
+    class TestUploadDownload:
+
+        def test_upload_file(self, driver):
+            upload_page = UploadDownloadPage(driver, 'https://demoqa.com/upload-download')
+            upload_page.open()
+            file_name, result = upload_page.upload_file()
+            assert file_name == result

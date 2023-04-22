@@ -1,8 +1,7 @@
-data1 = ['Notes', 'Office', 'Public', 'Private', 'Classified', 'General', 'Excel File.doc']
-data2 = ['notes', 'office', 'public', 'private', 'classified', 'general', 'excelFile']
+data1 = r"C:\Users\user\PycharmProjects\Automation_python\filetest23.txt"
+data2 = r"C:\fakepath\filetest23.txt"
+print(data1.split('\\')[-1])
+print(data2.split('\\')[-1])
+assert data1.split('\\')[-1] == data2.split('\\')[-1]
+# [-1] - leaving only the file name
 
-data1 = str(data1).replace(' ', '').replace('doc', '').replace('.', '').lower()
-print(data1)
-data2 = str(data2).replace(' ', '').lower()
-print(data2)
-assert data1 == data2
