@@ -2,6 +2,7 @@ import random
 import time
 
 from pages.base_page import BasePage
+from pages.browser_windows_page import BrowserWindowsPage
 from pages.button_page import ButtonsPage
 from pages.check_box_page import CheckBoxPage
 from pages.dynamic_properties_page import DynamicPropertiesPage
@@ -110,7 +111,6 @@ class TestElements:
             assert right == 'You have done a right click'
             assert click == 'You have done a dynamic click'
 
-
     class TestLinksPage:
 
         def test_check_link(self, driver):
@@ -148,15 +148,19 @@ class TestElements:
             appear = dynamic_page.check_appear_of_button()
             assert appear is True
 
-        def test_enable_batton(self, driver):
+        def test_enable_button(self, driver):
             dynamic_page = DynamicPropertiesPage(driver, 'https://demoqa.com/dynamic-properties')
             dynamic_page.open()
             enable_button = dynamic_page.check_enable_button()
             assert enable_button is True
 
+    class TestBrowserWindowsPage:
+
+        def open_new_tab(self, driver):
+            windows_page = BrowserWindowsPage(driver, 'https://demoqa.com/browser-windows')
+            windows_page.open()
 
 
-
-
-
-
+        def new_window(self, driver):
+            windows_page = BrowserWindowsPage(driver, 'https://demoqa.com/browser-windows')
+            windows_page.open()
