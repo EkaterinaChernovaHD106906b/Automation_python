@@ -154,13 +154,4 @@ class TestElements:
             enable_button = dynamic_page.check_enable_button()
             assert enable_button is True
 
-    class TestBrowserWindowsPage:
-
-        def open_new_tab(self, driver):
-            windows_page = BrowserWindowsPage(driver, 'https://demoqa.com/browser-windows')
-            windows_page.open()
-
-
-        def new_window(self, driver):
-            windows_page = BrowserWindowsPage(driver, 'https://demoqa.com/browser-windows')
-            windows_page.open()
+    

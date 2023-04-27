@@ -45,7 +45,8 @@ class BasePage:
         action.context_click(element)
         action.perform()
 
-
+    def alert_is_present(self, locator, timeout=6):
+        return wait(self.driver, timeout).until(EC.alert_is_present())
 
 
 
