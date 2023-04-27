@@ -1,7 +1,9 @@
 import time
 
-from pages.alertsPage import AlertsPage
+from pages.alerts_page import AlertsPage
 from pages.browser_windows_page import BrowserWindowsPage
+from pages.frames_page import FramesPage
+from pages.nested_frames_page import NestedFramesPage
 
 
 class TestAlertsFrameWindow:
@@ -44,6 +46,26 @@ class TestAlertsFrameWindow:
             alerts_page.open()
             text_result, text_result2 = alerts_page.prompt_alert()
             assert f'You entered {text_result}' == text_result2
+
+    class TestFrames:
+
+        def test_frames(self, driver):
+            frame_page = FramesPage(driver, 'https://demoqa.com/frames')
+            frame_page.open()
+            result1 = frame_page.check_frame('frame1')
+            result2 = frame_page.check_frame('frame2')
+            assert result1 == ['This is a sample page', '500px', '350px']
+            assert result2 == ['This is a sample page', '100px', '100px']
+
+    class TestNestedFramesPage:
+
+        def test_nested_frames(self, driver):
+            nested_frames_page = NestedFramesPage(driver, 'https://demoqa.com/nestedframes')
+            nested_frames_page.open()
+            text1, text2 = nested_frames_page.check_nested_frame()
+            assert text1 == 'Parent frame'
+            assert text2 == 'Child Iframe'
+
 
 
 
