@@ -48,5 +48,10 @@ class BasePage:
     def alert_is_present(self, locator, timeout=6):
         return wait(self.driver, timeout).until(EC.alert_is_present())
 
+    def action_drag_and_drop_by_offset(self, element, x, y):
+        action = ActionChains(self.driver)
+        action.drag_and_drop_by_offset(element, x, y)
+        action.perform()
+
 
 
