@@ -5,6 +5,7 @@ from pages.auto_complete_page import AutoCompletePage
 from pages.date_picker_page import DatePickerPage
 from pages.progress_bar_page import ProgressBarPage
 from pages.slider_page import SliderPage
+from pages.tabs_page import TabsPage
 
 
 class TestWidgets:
@@ -69,6 +70,17 @@ class TestWidgets:
             bar_page.open()
             value_before, value_after = bar_page.change_bar_progress()
             assert value_before != value_after
+
+    class TestTabsPage:
+
+        def test_tabs_page(self, driver):
+            tabs_page = TabsPage(driver, 'https://demoqa.com/tabs')
+            tabs_page.open()
+            button_text, tab_text = tabs_page.click_on_tab('use')
+            print(button_text)
+            print(tab_text)
+            assert button_text == 'Use'
+            assert tab_text != 0
 
 
 
