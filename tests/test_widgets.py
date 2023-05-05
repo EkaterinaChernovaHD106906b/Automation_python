@@ -6,6 +6,7 @@ from pages.date_picker_page import DatePickerPage
 from pages.progress_bar_page import ProgressBarPage
 from pages.slider_page import SliderPage
 from pages.tabs_page import TabsPage
+from pages.tool_tips_page import ToolTipsPage
 
 
 class TestWidgets:
@@ -81,6 +82,18 @@ class TestWidgets:
             print(tab_text)
             assert button_text == 'Use'
             assert tab_text != 0
+
+    class TestToolTipsPage:
+
+        def test_tool_tips(self, driver):
+            tool_tips_page = ToolTipsPage(driver, 'https://demoqa.com/tool-tips')
+            tool_tips_page.open()
+            button_text, input_text, first_href, second_href = tool_tips_page.check_tool_tips()
+            time.sleep(5)
+            assert button_text == 'You hovered over the Button'
+            assert input_text == 'You hovered over the text field'
+            assert first_href == 'You hovered over the Contrary'
+            assert second_href == 'You hovered over the 1.10.32'
 
 
 
