@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
@@ -17,16 +18,18 @@ class DatePickerPage(BasePage):
     DATE_TIME_MONTH_LIST = (By.CSS_SELECTOR, 'div.react-datepicker__month-option')
     DATE_TIME_YEAR_LIST = (By.CSS_SELECTOR, 'div.react-datepicker__year-option')
 
+    @allure.step('Select date')
     def select_date(self):
         date = next(generated_date())
         input_date = self.element_is_visible(self.DATE_INPUT)
         value_date_before = input_date.get_attribute('value')
         input_date.click()
-        self.select_date_by_text(self.SELECT_MONTH, date.month)
-        self.select_date_by_text(self.SELECT_YEAR, date.year)
-        self.select_date_item_from_list(self.SELECT_DATE_LIST, date.day)
-        value_date_after = input_date.get_attribute('value')
-        return value_date_before, value_date_after
+        with allure.step('select month, year, date'):
+            self.select_date_by_text(self.SELECT_MONTH, date.month)
+            self.select_date_by_text(self.SELECT_YEAR, date.year)
+            self.select_date_item_from_list(self.SELECT_DATE_LIST, date.day)
+            value_date_after = input_date.get_attribute('value')
+            return value_date_before, value_date_after
 
     def select_date_by_text(self, element, value):
         select = Select(self.element_is_present(element))
@@ -53,4 +56,3 @@ class DatePickerPage(BasePage):
         input_date_after = self.element_is_visible(self.DATE_AND_TIME_INPUT)
         value_date_after = input_date.get_attribute('value')
         return value_date_before, value_date_after
-

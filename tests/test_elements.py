@@ -142,6 +142,7 @@ class TestElements:
             color_before, color_after = dynamic_page.check_changed_of_color()
             assert color_before != color_after
 
+
         def test_appear_button(self, driver):
             dynamic_page = DynamicPropertiesPage(driver, 'https://demoqa.com/dynamic-properties')
             dynamic_page.open()

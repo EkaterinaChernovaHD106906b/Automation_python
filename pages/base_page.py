@@ -58,5 +58,14 @@ class BasePage:
         action.move_to_element(element)
         action.perform()
 
+    def action_drag_and_drop_to_element(self, element1, element2):
+        action = ActionChains(self.driver)
+        action.drag_and_drop(element1, element2)
+        action.perform()
+
+    def scroll_by(self, scroll_value):
+        scroll_by = f'window.scrollBy(0, {scroll_value});'
+        self.driver.execute_script(scroll_by)
+
 
 
