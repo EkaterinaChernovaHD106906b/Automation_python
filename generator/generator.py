@@ -4,7 +4,7 @@ from data.data import Person, Color, Date
 from faker import Faker
 
 faker_ru = Faker('ru_RU')
-fake_en = Faker('en')
+faker_en = Faker('en')
 Faker.seed()
 
 
