@@ -1,10 +1,14 @@
 import time
 
+from uitap_pages.ajax_data_page import AJAXDataPage
 from uitap_pages.class_attribute_page import ClassAttributePage
 from uitap_pages.dynamic_id_page import DynamicIdPage
+from uitap_pages.dynamic_table_page import DynamicTablePage
 from uitap_pages.hidden_layers_page import HiddenLayersPage
 from uitap_pages.load_page import LoadPage
+from uitap_pages.scrollbars_page import ScrollBarsPage
 from uitap_pages.shadow_DOM_page import ShadowDomPage
+from uitap_pages.text_input_page import TextInputPage
 
 
 class TestPages:
@@ -42,5 +46,34 @@ class TestPages:
             text = load_page.loading_page()
             time.sleep(5)
             assert text == 'Button Appearing After Delay'
+
+        def test_ajax_page(self, driver):
+            ajax_page = AJAXDataPage(driver, 'http://uitestingplayground.com/ajax')
+            ajax_page.open()
+            result = ajax_page.wait_element_ajax()
+            assert result == 'Data loaded with AJAX get request.'
+
+        def test_input_page(self, driver):
+            input_page = TextInputPage(driver, 'http://uitestingplayground.com/textinput')
+            input_page.open()
+            button_name_before, button_name_after = input_page.check_text_on_the_button()
+            time.sleep(5)
+            assert button_name_before != button_name_after
+
+        def test_scrollbar_page(self, driver):
+            scrollbar_page = ScrollBarsPage(driver, 'http://uitestingplayground.com/scrollbars')
+            scrollbar_page.open()
+            scrollbar_page.use_scrollbar()
+            time.sleep(5)
+
+        def test_dynamic_table_page(self, driver):
+            dynamic_table_page = DynamicTablePage(driver, 'http://uitestingplayground.com/dynamictable')
+            dynamic_table_page.open()
+            value, label_cpu = dynamic_table_page.get_value_of_cpu()
+            time.sleep(5)
+            assert value == label_cpu
+
+
+
 
 
