@@ -1,14 +1,17 @@
 import time
 
+from pages.progress_bar_page import ProgressBarPage
 from uitap_pages.ajax_data_page import AJAXDataPage
 from uitap_pages.class_attribute_page import ClassAttributePage
 from uitap_pages.dynamic_id_page import DynamicIdPage
 from uitap_pages.dynamic_table_page import DynamicTablePage
 from uitap_pages.hidden_layers_page import HiddenLayersPage
 from uitap_pages.load_page import LoadPage
+from uitap_pages.progress_bar_page import ProgressBarPageUi
 from uitap_pages.scrollbars_page import ScrollBarsPage
 from uitap_pages.shadow_DOM_page import ShadowDomPage
 from uitap_pages.text_input_page import TextInputPage
+from uitap_pages.verify_text_page import VerifyTextPage
 
 
 class TestPages:
@@ -72,6 +75,18 @@ class TestPages:
             value, label_cpu = dynamic_table_page.get_value_of_cpu()
             time.sleep(5)
             assert value == label_cpu
+
+        def test_verify_text_page(self, driver):
+            verify_page = VerifyTextPage(driver, 'http://uitestingplayground.com/verifytext')
+            verify_page.open()
+            text = verify_page.find_text()
+            assert text == 'Welcome UserName!'
+
+        def test_progress_bar_page(self, driver):
+            progress_bar_page = ProgressBarPageUi(driver, 'http://uitestingplayground.com/progressbar')
+            progress_bar_page.open()
+            value_before, value_after = progress_bar_page.check_bar_progress()
+            assert value_before != value_after
 
 
 
