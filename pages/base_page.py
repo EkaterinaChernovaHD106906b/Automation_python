@@ -67,9 +67,9 @@ class BasePage:
         scroll_by = f'window.scrollBy(0, {scroll_value});'
         self.driver.execute_script(scroll_by)
 
-    def wait_ajax_request(self, locator,  timeout=16):
+    def wait_ajax_request(self, locator, timeout=16):
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
+    '''self.driver.execute_script("arguments[0].scrollIntoView();", element)'''  # scroll to element
 
-
-
+    # inputElement.getAttribute("value") - get text from input field

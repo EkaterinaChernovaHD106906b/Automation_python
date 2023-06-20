@@ -1,12 +1,15 @@
 import time
 
-from pages.progress_bar_page import ProgressBarPage
+
 from uitap_pages.ajax_data_page import AJAXDataPage
 from uitap_pages.class_attribute_page import ClassAttributePage
 from uitap_pages.dynamic_id_page import DynamicIdPage
 from uitap_pages.dynamic_table_page import DynamicTablePage
 from uitap_pages.hidden_layers_page import HiddenLayersPage
 from uitap_pages.load_page import LoadPage
+from uitap_pages.mouse_over_page import MouseOverPage
+from uitap_pages.non_breaking_space_page import NonBreakingSpacePage
+from uitap_pages.overlapped_page import OverlappedPage
 from uitap_pages.progress_bar_page import ProgressBarPageUi
 from uitap_pages.scrollbars_page import ScrollBarsPage
 from uitap_pages.shadow_DOM_page import ShadowDomPage
@@ -87,6 +90,29 @@ class TestPages:
             progress_bar_page.open()
             value_before, value_after = progress_bar_page.check_bar_progress()
             assert value_before != value_after
+
+        def test_mouse_over_page(self, driver):
+            mouse_over_page = MouseOverPage(driver, 'http://uitestingplayground.com/mouseover')
+            mouse_over_page.open()
+            count_before, count_after = mouse_over_page.check_click_count()
+            assert count_before != count_after
+
+        def test_non_breaking_space_page(self, driver):
+            nbs_page = NonBreakingSpacePage(driver, 'http://uitestingplayground.com/nbsp')
+            nbs_page.open()
+            nbs_page.find_button_by_text()
+            time.sleep(3)
+
+        def test_overlapped_element(self, driver):
+            overlapped_page = OverlappedPage(driver, 'http://uitestingplayground.com/overlapped')
+            overlapped_page.open()
+            name = overlapped_page.name_input_field('user')
+            time.sleep(3)
+            assert name == 'user'
+
+
+
+
 
 
 
